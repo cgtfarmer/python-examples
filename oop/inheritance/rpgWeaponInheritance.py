@@ -5,8 +5,8 @@ class Weapon:
     self.attackSpeed = attackSpeed
     self.requiredHands = requiredHands
 
-  def describe(self):
-    print(f'{self.name} - DMG: {self.damage}, Speed: {self.attackSpeed}, Req. Hands: {self.requiredHands}')
+  def __str__(self):
+    return f'{self.name} - DMG: {self.damage}, Speed: {self.attackSpeed}, Req. Hands: {self.requiredHands}'
 
 class Longsword(Weapon):
   def __init__(self, name, damage, attackSpeed):
@@ -21,9 +21,8 @@ def main():
 
   greatsword = Greatsword("Adamant Greatsword", 28, 2)
 
-  longsword.describe()
-
-  greatsword.describe()
+  print(longsword)
+  print(greatsword)
 
 if __name__ == '__main__':
   main()
