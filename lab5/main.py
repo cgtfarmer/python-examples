@@ -1,80 +1,95 @@
 import os.path
 import csv
 import re
-def main():
-  file_path = selectInputFile()
-  csv_path = provideCSVpath()
-  filtered_list = list_filter(file_path)
-  with open(file_path, "r") as f:
-    with open(csv_path, 'w', newline='')as csv_file:
-      csv_writer = csv.writer(csv_file, delimiter=",")
-      header_list = ['Email','Time','Confidence']
-      csv_writer.writerow(header_list)
 
-  #print(from_colon_list)
-  #print(csv_path)
-  #print(file_path)
-def selectInputFile():
-  while True:
+def main():
+  email_list = []
+  time_list = []
+  confidence_list = []
+  filepath = getInputFilepathUserInput()
+  csv_path = getOutputFilepathUserInput()
+  lines = getFileLinesAsList(filepath)
+
+  with open(csv_path, 'w') as output_file:
+    csvWriter = csv.writer(output_file)
+
+    for line in lines:
+      if re.match('^From:\s', line):
+        email_list.append(line[6:-1])
+
+      if re.match('^X-DSPAM-Processed:\s', line):
+        time_list.append(line[30:-6])
+
+      if re.match('^X-DSPAM-Confidence:\s', line):
+        confidence_list.append(line[20:-1])
+
+    for i in range(len(email_list)):
+      confidence_list[i] = float(confidence_list[i])
+
+      if time_list[i][0] == '0':
+        time_list[i] = time_list[i][1:]
+
+    csvWriter.writerow(['Email', 'Time', 'Confidence'])
+
+    for i in range(len(email_list)):
+      csvWriter.writerow([email_list[i],time_list[i],confidence_list[i]])
+
     try:
-      file_path = 'files/' + input('Input file name: ').strip()
-      with open(file_path) as input_file:
+      test_for_zero(confidence_list, csvWriter)
+    except ZeroDivisionError:
+      print('No values present.')
+    else:
+      print('Data stored!')
+
+def getFileLinesAsList(filepath):
+  f = open(filepath, "r")
+  lines = f.readlines()
+  f.close()
+
+  return lines
+
+def getInputFilepathUserInput():
+  while True:
+    fileName = input('Input file name: ').strip()
+    filepath = f'files{os.sep}{fileName}'
+
+    try:
+      with open(filepath) as input_file:
         break
     except FileNotFoundError:
       print('File does not exist!')
-  #print(file_path)
-  return file_path
-def provideCSVpath():
+
+  return filepath
+
+def getOutputFilepathUserInput():
   input_prompt = 'Output file name: '
+  validResponses = ['y', 'n']
+
   while True:
     csv_name = input(f'{input_prompt}').strip()
-    csv_path = 'files/' + os.sep + csv_name
+    csv_path = f'files{os.sep}{csv_name}'
 
     if os.path.isfile(csv_path):
-      overwritefile = input('Overwrite existing file (y/n): ').strip().lower()
+      overwriteFileResponse = input('Overwrite existing file (y/n): ').strip().lower()
 
-      while overwritefile != 'y' and overwritefile != 'n':
-        overwritefile = input('Enter (y/n): ').strip().lower()
+      while overwriteFileResponse not in validResponses:
+        overwriteFileResponse = input('Enter (y/n): ').strip().lower()
 
-      if overwritefile == 'n':
+      if overwriteFileResponse == 'n':
         input_prompt = 'New output file name: '
         continue
 
-      elif overwritefile == 'y':
-        return csv_path
+      if overwriteFileResponse == 'y':
+        break
+
     return csv_path
-def list_filter(file_path):
-  from_colon_list = []
-  datetime_list =[]
-  time_list = []
-  confidence_list = []
-  regex = '^From:'
-  regex2 = '^X-DSPAM-Processed'
-  regex3 = '^X-DSPAM-Confidence:'
-  i = 0
-  with open(file_path, "r") as f:
-    lines = f.readlines()
-    for line in lines:
-        match = re.search(regex, line)
-        if match:
-            from_colon_list.append(line.split()[1:])
-    for line in lines:
-        match = re.search(regex2, line)
-        if match:
-            datetime_list.append(line.split()[1:])
-    for line in lines:
-        match = re.search(regex3, line)
-        if match:
-            confidence_list.append(line.split()[1:])
-    for time in datetime_list:
-        time = datetime_list[i][3]
-        time_list.append(time)
-        i = (i + 1)
 
-  print(time_list)
+def test_for_zero(confidence_list, csvWriter):
+  if len(confidence_list) == 0:
+    raise ZeroDivisionError
 
-  #print(from_colon_list)
-  #print(datetime_list)
-  #print(confidence_list)
+  average_confidence = sum(confidence_list) / len(confidence_list)
+  csvWriter.writerow(['', 'Average', f'{average_confidence:.4f}'])
+
 if __name__ == '__main__':
   main()

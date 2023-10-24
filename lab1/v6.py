@@ -1,0 +1,41 @@
+def main():
+    johnv = 0
+    janev = 0
+    totalv = 0
+    while True:
+        z = vote_menu()
+        if z == "x":
+            break
+        count = candidate_menu()
+        if count == 1:
+            johnv += 1
+            totalv += 1
+        elif count == 2:
+            janev +=1
+            totalv +=1
+    print(f'John - {johnv}, Jane - {janev}, Total - {totalv}')
+
+
+def vote_menu():
+    print("--------------------")
+    print("VOTE MENU")
+    print("--------------------")
+    decision = input("v:Vote\nx:Exit\nOption: ").strip().lower()
+    while decision != "v" and decision != "x":
+        decision = input("Invalid:(v/x) ")
+        decision = decision.strip().lower()
+    return decision
+def candidate_menu():
+    print("--------------------")
+    print("CANDIDATE MENU")
+    print("--------------------")
+    voteFor = int(input("1.John\n2.Jane\nCandidate: "))
+    while voteFor != 1 and  voteFor !=2:
+        voteFor = int(input("Invalid(1/2): "))
+    if voteFor == 1:
+        print("Voted John")
+    elif voteFor == 2:
+        print("Voted Jane")
+    return voteFor
+if __name__== '__main__':
+    main()
