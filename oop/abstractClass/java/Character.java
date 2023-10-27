@@ -1,4 +1,4 @@
-package com.nps.example;
+package com.cgtfarmer.example;
 
 abstract class Character {
 
