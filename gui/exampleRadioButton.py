@@ -1,20 +1,20 @@
-import tkinter as tk
+from tkinter import *
 
-window = tk.Tk()
+window = Tk()
 
-greeting = tk.Label(text="---------- Hello, World! ----------")
+question = Label(text="Choose your favorite color:")
 
-radio_var = tk.StringVar()
-radioButton1 = tk.Radiobutton(window, text="Option 1", variable=radio_var, value="Option 1", command=None)
-radioButton2 = tk.Radiobutton(window, text="Option 2", variable=radio_var, value="Option 2", command=None)
-radioButton3 = tk.Radiobutton(window, text="Option 3", variable=radio_var, value="Option 3", command=None)
+radioVar = StringVar()
+radioButton1 = Radiobutton(window, text="Red", variable=radioVar, value="red")
+radioButton2 = Radiobutton(window, text="Green", variable=radioVar, value="green")
+radioButton3 = Radiobutton(window, text="Blue", variable=radioVar, value="blue")
 
-button = tk.Button(window, text="Clear")
+button = Button(window, text="Clear")
 
 def main():
-  button.bind("<Button-1>", doTheThing)
+  button.configure(command=clearRadioSelection)
 
-  greeting.pack()
+  question.pack()
 
   radioButton1.pack()
   radioButton2.pack()
@@ -24,8 +24,8 @@ def main():
 
   window.mainloop()
 
-def doTheThing(event):
-  radio_var.set("")
+def clearRadioSelection():
+  radioVar.set("")
 
 if __name__ == '__main__':
   main()

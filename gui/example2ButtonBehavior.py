@@ -1,29 +1,33 @@
-import tkinter as tk
+from tkinter import *
 
-window = tk.Tk()
+window = Tk()
 
-greeting = tk.Label(text="---------- Hello, World! ----------")
+greeting = Label(text="---------- Hello, World! ----------")
 
-button = tk.Button(text="Awesome Button")
+button1 = Button(text="Button 1")
+button2 = Button(text="Button 2")
+button3 = Button(text="Button 3")
 
 def main():
-  button.bind("<Button-1>", printStuff1)
-  button.bind("<Button-2>", printStuff2)
-  button.bind("<Button-3>", printStuff3)
+  button1.configure(command=printStuff1)
+  button2.configure(command=printStuff2)
+  button3.configure(command=printStuff3)
 
   greeting.pack()
-  button.pack()
+  button1.pack()
+  button2.pack()
+  button3.pack()
 
   window.mainloop()
 
-def printStuff1(event):
-  print("You clicked with your left mouse button")
+def printStuff1():
+  print("ABC")
 
-def printStuff2(event):
-  print("You clicked with your middle mouse button")
+def printStuff2():
+  print("DEF")
 
-def printStuff3(event):
-  print("You clicked with your right mouse button")
+def printStuff3():
+  print("GHI")
 
 if __name__ == '__main__':
   main()

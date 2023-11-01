@@ -1,15 +1,15 @@
-import tkinter as tk
+from tkinter import *
 
-window = tk.Tk()
+window = Tk()
 
-greeting = tk.Label(text="---------- Hello, World! ----------")
+greeting = Label(text="---------- Hello, World! ----------")
 
-entry = tk.Entry()
+entry = Entry()
 
-button = tk.Button(text="Awesome Button")
+button = Button(text="Awesome Button")
 
 def main():
-  button.bind("<Button-1>", doTheThing)
+  button.configure(command=doTheThing)
 
   greeting.pack()
   entry.pack()
@@ -17,7 +17,7 @@ def main():
 
   window.mainloop()
 
-def doTheThing(event):
+def doTheThing():
   inputValue = entry.get()
   print(f'Hello {inputValue}, how are you today?')
 
