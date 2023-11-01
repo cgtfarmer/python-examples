@@ -11,24 +11,23 @@ radioButton1 = tk.Radiobutton(window, text="Option 1", variable=radio_var, value
 radioButton2 = tk.Radiobutton(window, text="Option 2", variable=radio_var, value="Option 2", command=None)
 radioButton3 = tk.Radiobutton(window, text="Option 3", variable=radio_var, value="Option 3", command=None)
 
-button = tk.Button(text="Awesome Button")
+button = tk.Button(window, text="Clear")
 
 def main():
   button.bind("<Button-1>", doTheThing)
 
   greeting.pack()
-  entry.pack()
-  button.pack()
 
   radioButton1.pack()
   radioButton2.pack()
   radioButton3.pack()
 
+  button.pack()
+
   window.mainloop()
 
 def doTheThing(event):
-  inputValue = entry.get()
-  print(f'Hello {inputValue}, how are you today?')
+  radio_var.set("")
 
 if __name__ == '__main__':
   main()
