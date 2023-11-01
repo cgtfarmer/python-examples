@@ -4,8 +4,6 @@ window = tk.Tk()
 
 greeting = tk.Label(text="---------- Hello, World! ----------")
 
-entry = tk.Entry()
-
 radio_var = tk.StringVar()
 radioButton1 = tk.Radiobutton(window, text="Option 1", variable=radio_var, value="Option 1", command=None)
 radioButton2 = tk.Radiobutton(window, text="Option 2", variable=radio_var, value="Option 2", command=None)
