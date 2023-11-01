@@ -10,15 +10,5 @@ def main():
   print(MathLib.sub(3, 1))
   print(MathLib.mult(2, 3))
 
-  firstName = "John"
-  lastName = "Doe"
-  age = 25
-
-  person = {
-    "firstName": "John",
-    # etc.
-  }
-
-
 if __name__ == '__main__':
   main()
