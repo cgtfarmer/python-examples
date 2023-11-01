@@ -1,0 +1,15 @@
+# Windows
+
+If these don't work out of the box, run this in WSL:
+
+`sudo apt-get install python-tk`
+
+# MacOS
+
+If these don't work out of the box, run this in the Terminal app:
+
+brew install python-tk
+
+If you don't have Homebrew installed, you'll need to do that first
+
+Installation instructions: https://brew.sh/
